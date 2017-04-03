@@ -16,6 +16,7 @@ Redmine::Plugin.register :redmine_issue_checklist do
     permission :view_checklists, {}
     permission :done_checklists, { issue_checklist: :done }
     permission :edit_checklists, :issue_checklist => [:delete, :done]
+    permission :import_checklists, {}
   end
 
   settings default: {

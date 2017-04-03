@@ -10,7 +10,7 @@
           class: 'tag-add icon icon-add' %>
       <%= file_field_tag 'import_checklist',
           id:     'import_checklist_items_input',
-          accept: 'text/plain' %>
+          accept: 'text/plain' if User.current.allowed_to?(:import_checklists, @project) %>
 
       <%= javascript_tag "observeIssueChecklistField('checklist_form_items', 'add_checklist_item_input', 'add_checklist_item_button', 'import_checklist_items_input');" %>
       <%= javascript_tag "createIssueChecklist(#{@issue.checklist.collect { |cli| { is_done: cli.is_done, subject: cli.subject, id: cli.id } }.to_json.html_safe});" %>

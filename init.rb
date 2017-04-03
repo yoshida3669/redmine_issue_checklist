@@ -12,17 +12,14 @@ Redmine::Plugin.register :redmine_issue_checklist do
 
   requires_redmine version_or_higher: '2.0.0'
 
+  project_module :issue_checklist do
+    permission :view_checklists, {}
+    permission :done_checklists, { issue_checklist: :done }
+    permission :edit_checklists, :issue_checklist => [:delete, :done]
+  end
+
   settings default: {
     save_log:         false,
     issue_done_ratio: false
   }, partial:       'settings/issue_checklist'
-
-  Redmine::AccessControl.map do |map|
-    map.project_module :issue_tracking do |map|
-      map.permission :view_checklists, {}
-      map.permission :done_checklists, { issue_checklist: :done }
-      map.permission :edit_checklists, { issue_checklist: :delete, issue_checklist: :done }
-    end
-  end
-
 end

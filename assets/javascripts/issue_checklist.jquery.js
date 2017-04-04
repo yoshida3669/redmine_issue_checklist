@@ -40,14 +40,17 @@ Redmine.IssueChecklist = jQuery.klass({
 
     isDone = isDone || false;
 
-    var hidden = $(document.createElement('input'));
-    hidden.attr({'type': 'hidden', 'name': 'check_list_items[][subject]', 'value':$.trim(сhecklistItem)});
-    var button = $(document.createElement('span'));
-    button.attr({'href': '#', 'class': 'delete icon icon-del' });
+    var hidden = $(document.createElement('input')).hide();
+    hidden.attr({'type': 'text', 'name': 'check_list_items[][subject]', 'value':$.trim(сhecklistItem)});
+    var itemLabel = $(document.createElement('span')).append($.trim(сhecklistItem));
+    var editButton = $(document.createElement('span'));
+    editButton.attr({'href': '#', 'class': 'edit icon icon-edit' });
+    var deleteButton = $(document.createElement('span'));
+    deleteButton.attr({'href': '#', 'class': 'delete icon icon-del' });
     var checkbox = $(document.createElement('input'));
     checkbox.attr({'type': 'checkbox', 'name': 'check_list_items[][is_done]', 'value': '1', 'id': 'checklist_item_checkbox_'+id});
     var label  = $(document.createElement('span'));
-    label.attr({ 'class': 'checklist-item' }).append(hidden).append(checkbox).append($.trim(сhecklistItem)).append(button);
+    label.attr({ 'class': 'checklist-item' }).append(checkbox).append(hidden).append(itemLabel).append(editButton).append(deleteButton);
 
     if (isDone == true) {
       checkbox.attr('checked', 'checked');
@@ -57,7 +60,27 @@ Redmine.IssueChecklist = jQuery.klass({
     this.checklist[сhecklistItem] = 1;
     this.element.append(label);
 
-    button.click($.proxy(function(){
+    editButton.click(function() {
+      hidden.show();
+      itemLabel.hide();
+      editButton.hide();
+    });
+
+    hidden.blur(function() {
+      itemLabel.text($.trim(hidden.val()));
+      hidden.hide();
+      itemLabel.show();
+      editButton.show();
+    });
+
+    hidden.keypress(function(event) {
+      if (event.which === 13) {
+        hidden.blur();
+        event.preventDefault();
+      }
+    });
+
+    deleteButton.click($.proxy(function(){
       this.checklist[сhecklistItem] = null;
       label.remove();
       // Event.stop(event);

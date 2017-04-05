@@ -10,7 +10,7 @@ module RedmineIssueChecklist
       def build_new_issue_from_params_with_checklist
         build_new_issue_from_params_without_checklist
         if User.current.allowed_to?(:edit_checklists, @issue.project)
-          @issue.update_checklist_items(params[:check_list_items])
+          @issue.update_checklist_items(params[:check_list_items]) if params[:check_list_items]
         end
       end
     end

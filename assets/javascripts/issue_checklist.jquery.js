@@ -58,8 +58,10 @@ Redmine.IssueChecklist = jQuery.klass({
     this.element.append(label);
 
     button.click($.proxy(function(){
-      this.checklist[сhecklistItem] = null;
-      label.remove();
+      if (window.confirm("Do you really want to delete this?")) {
+        this.checklist[сhecklistItem] = null;
+        label.remove();
+      }
       // Event.stop(event);
     }, this));
 

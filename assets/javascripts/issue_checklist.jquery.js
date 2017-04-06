@@ -67,7 +67,12 @@ Redmine.IssueChecklist = jQuery.klass({
     });
 
     hidden.blur(function() {
-      itemLabel.text($.trim(hidden.val()));
+      var newItem = $.trim(hidden.val());
+      if (newItem === "") {
+        hidden.val(itemLabel.text());
+      } else {
+        itemLabel.text(newItem);
+      }
       hidden.hide();
       itemLabel.show();
       editButton.show();

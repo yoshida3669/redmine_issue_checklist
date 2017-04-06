@@ -37,11 +37,20 @@ span.checklist-item.is-done-checklist-item, #issue_checklist_items li.is-done-ch
   color: #999;
 }
 
+span.checklist-item .edit,
 span.checklist-item .delete {
-  margin-left: 2px;
   opacity: 0.4;
 }
 
+span.checklist-item .edit {
+  margin-left: 8px;
+}
+
+span.checklist-item .delete {
+  margin-left: 2px;
+}
+
+span.checklist-item:hover .edit,
 span.checklist-item:hover .delete {
   opacity: 1;
 }
